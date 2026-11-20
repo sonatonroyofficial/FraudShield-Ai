@@ -6,7 +6,7 @@ export default function Logo({ className = "", light = false }: { className?: st
         <path d="M10.5 16.2 14.4 20l7.3-8" stroke={light ? "#1f4d45" : "#bfe0d1"} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
       <span className={`font-display text-[1.28rem] font-semibold tracking-tight ${light ? "text-paper" : "text-ink"}`}>
-        FraudShield<span className={light ? "text-sage" : "text-pine-2"}> AI</span>
+        ThreatX<span className={light ? "text-sage" : "text-pine-2"}> AI</span>
       </span>
     </span>
   );

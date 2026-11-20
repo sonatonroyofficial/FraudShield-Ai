@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const hind = Hind_Siliguri({ subsets: ["bengali"], weight: ["400", "500", "600", "700"], variable: "--font-hind" });
 
 export const metadata: Metadata = {
-  title: "FraudShield AI — Detect. Understand. Prevent. Protect.",
+  title: "ThreatX AI — Detect. Understand. Prevent. Protect.",
   description: "Check suspicious messages, links and screenshots in English, বাংলা or Banglish. Evidence-based, calm and private fraud protection.",
 };
 export const viewport: Viewport = { themeColor: "#f6f4ee" };

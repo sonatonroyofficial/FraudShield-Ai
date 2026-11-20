@@ -25,15 +25,29 @@ export default function CommunityPage() {
   const [type, setType] = useState<"message" | "url" | "phone">("message");
   const [content, setContent] = useState("");
   const [ok, setOk] = useState(false);
-  useEffect(() => setMine(loadReports()), []);
+  const [live, setLive] = useState<CommunityReport[] | null>(null);
+  const [err, setErr] = useState("");
+  const [busy, setBusy] = useState(false);
+  useEffect(() => {
+    setMine(loadReports());
+    fetch("/api/reports").then((r) => r.json()).then((d) => setLive((d.items ?? []).map((i: CommunityReport) => ({ ...i, updated: new Date(i.updated).toLocaleDateString() })))).catch(() => setLive([]));
+  }, []);
 
-  const list = SEED.filter((r) => (r.title + r.indicator + r.category).toLowerCase().includes(q.toLowerCase()));
+  const source = live && live.length ? live : SEED;
+  const list = source.filter((r) => (r.title + r.indicator + r.category).toLowerCase().includes(q.toLowerCase()));
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (content.trim().length < 4) return;
-    const r: CommunityReport = { id: "u" + Date.now(), type, title: type === "url" ? "Suspicious link" : type === "phone" ? "Suspicious phone number" : "Suspicious message", indicator: content.slice(0, 80), confidence: "low", status: "pending", reports: 1, category: "Awaiting review", updated: "just now" };
-    saveReport(r); setMine([r, ...mine]); setContent(""); setOk(true); setTimeout(() => setOk(false), 5000);
+    if (content.trim().length < 4 || busy) return;
+    setBusy(true); setErr("");
+    try {
+      const res = await fetch("/api/reports", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type, content }) });
+      const d = await res.json();
+      if (!res.ok) throw new Error(d.error || "Failed");
+      const r: CommunityReport = { ...d.report, updated: "just now" };
+      saveReport(r); setMine([r, ...mine.filter((m) => m.id !== r.id)]); setContent(""); setOk(true); setTimeout(() => setOk(false), 5000);
+    } catch (x) { setErr((x as Error).message); }
+    setBusy(false);
   };
 
   return (
@@ -44,7 +58,7 @@ export default function CommunityPage() {
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-pine-2">Community</p>
         <h1 className="mx-auto mt-3 max-w-3xl text-balance font-display text-5xl font-medium leading-[1.08] tracking-tight sm:text-6xl">Moderated alerts, <span className="italic text-pine-2">shared with care.</span></h1>
         <p className="mx-auto mt-5 max-w-xl text-lg text-ink-soft">A report is an allegation, not proof. Every alert here shows its confidence and has been reviewed before it is shared.</p>
-        <p className="mx-auto mt-6 inline-flex items-center gap-2 rounded-full bg-white/70 px-4 py-2 text-xs text-muted"><Info size={14} /> Illustrative demo data — no live community yet.</p>
+        <p className="mx-auto mt-6 inline-flex items-center gap-2 rounded-full bg-white/70 px-4 py-2 text-xs text-muted"><Info size={14} /> {live && live.length ? "Showing alerts approved by moderators." : "Illustrative demo data until the first alerts are approved."}</p>
       </section>
 
       <section className="mx-auto grid max-w-6xl gap-8 px-6 lg:grid-cols-[1.5fr_1fr]">
@@ -106,7 +120,8 @@ export default function CommunityPage() {
               </div>
               <textarea value={content} onChange={(e) => setContent(e.target.value)} rows={4} placeholder={type === "url" ? "Paste the suspicious link" : type === "phone" ? "Phone number and what happened" : "Paste the suspicious message"} aria-label="Report content"
                 className="mt-3 w-full resize-none rounded-2xl border border-white/15 bg-white/10 p-3.5 text-[15px] text-paper outline-none placeholder:text-paper/50 focus:border-sage focus:bg-white/15" />
-              <button className="group mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full bg-paper px-5 py-3.5 text-sm font-semibold text-pine transition hover:scale-[1.02]"><Send size={15} /> Submit for review</button>
+              <button className="group mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full bg-paper px-5 py-3.5 text-sm font-semibold text-pine transition hover:scale-[1.02]"><Send size={15} /> {busy ? "Submitting…" : "Submit for review"}</button>
+              {err && <p className="mt-3 text-sm text-amber" role="alert">{err}</p>}
               <AnimatePresence>{ok && <motion.p initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="mt-3 flex items-center gap-2 text-sm text-sage"><CheckCircle2 size={16} /> Thank you. Stored as pending review — it stays private until approved.</motion.p>}</AnimatePresence>
             </form>
           </Reveal>

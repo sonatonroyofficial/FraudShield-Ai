@@ -11,7 +11,7 @@ export default function Navbar() {
   const path = usePathname();
   const { t, lang, setLang } = useLang();
   const [open, setOpen] = useState(false);
-  if (path.startsWith("/admin")) return null;
+  if (path.startsWith("/admin") || path.startsWith("/docs")) return null;
   const links = [
     { href: "/scanner", label: t("nav.scanner") },
     { href: "/community", label: t("nav.community") },
@@ -22,7 +22,7 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-4">
       <motion.nav initial={{ y: -40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         className="glass mx-auto flex max-w-6xl items-center justify-between rounded-full py-2.5 pl-5 pr-2.5 shadow-soft">
-        <Link href="/" aria-label="FraudShield AI home"><Logo /></Link>
+        <Link href="/" aria-label="ThreatX AI home"><Logo /></Link>
         <ul className="hidden items-center gap-1 md:flex">
           {links.map((l) => {
             const active = path.startsWith(l.href);

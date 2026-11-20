@@ -54,3 +54,29 @@ mark.hl { background: linear-gradient(transparent 55%, rgb(192 89 74 / .28) 55%)
 mark.hl-amber { background: linear-gradient(transparent 55%, rgb(198 138 42 / .32) 55%); color: inherit; padding: 0 2px; }
 :focus-visible { outline: 2px solid var(--color-pine-2); outline-offset: 3px; border-radius: 8px; }
 @media (prefers-reduced-motion: reduce) { * { animation-duration: .001ms !important; animation-iteration-count: 1 !important; } html { scroll-behavior: auto; } }
+
+/* ---------- docs prose ---------- */
+.prose-docs { color: var(--color-ink-soft); font-size: 1.0625rem; line-height: 1.8; }
+.prose-docs > * + * { margin-top: 1rem; }
+.prose-docs h2, .prose-docs h3, .prose-docs h4 { font-family: var(--font-display); color: var(--color-ink); font-weight: 500; line-height: 1.25; margin-top: 1.75rem; }
+.prose-docs h2 { font-size: 1.6rem; } .prose-docs h3 { font-size: 1.3rem; } .prose-docs h4 { font-size: 1.1rem; }
+.prose-docs strong { color: var(--color-ink); font-weight: 600; }
+.prose-docs ul, .prose-docs ol { padding-left: 1.4rem; } .prose-docs ul { list-style: disc; } .prose-docs ol { list-style: decimal; }
+.prose-docs li + li { margin-top: .4rem; } .prose-docs li::marker { color: var(--color-pine-2); }
+.prose-docs a { color: var(--color-pine-2); text-decoration: underline; text-underline-offset: 3px; }
+.prose-docs blockquote { border-left: 3px solid var(--color-sage); background: var(--color-mist); padding: .9rem 1.2rem; border-radius: 0 1rem 1rem 0; color: var(--color-ink); font-family: var(--font-display); font-size: 1.15rem; }
+.prose-docs code { background: var(--color-paper-2); border: 1px solid var(--color-line); border-radius: 6px; padding: .1rem .4rem; font-size: .88em; color: var(--color-pine); word-break: break-word; }
+.prose-docs pre { background: var(--color-ink); color: var(--color-paper); padding: 1rem 1.2rem; border-radius: 1rem; overflow-x: auto; }
+.prose-docs table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: .95rem; border: 1px solid var(--color-line); border-radius: 1rem; overflow: hidden; display: block; overflow-x: auto; }
+.prose-docs th { background: var(--color-mist); color: var(--color-ink); text-align: left; font-weight: 600; }
+.prose-docs th, .prose-docs td { padding: .75rem 1rem; border-bottom: 1px solid var(--color-line); vertical-align: top; min-width: 8rem; }
+.prose-docs tr:last-child td { border-bottom: 0; }
+.prose-docs hr { border: 0; border-top: 1px solid var(--color-line); }
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff !important; }
+  .docs-shell { padding: 0 !important; }
+  .docs-section { break-inside: avoid-page; page-break-inside: avoid; }
+  * { animation: none !important; transition: none !important; }
+}

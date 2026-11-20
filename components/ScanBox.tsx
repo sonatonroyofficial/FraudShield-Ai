@@ -50,9 +50,14 @@ export default function ScanBox({ compact = false, initial = "message" }: { comp
 
   async function run() {
     if (!ready || busy) return;
-    setBusy(true);
-    const res = await submitScan(mode === "message" ? text : mode === "url" ? url : file!.name, mode);
-    router.push(`/result/${res.scan_id}`);
+    setBusy(true); setErr("");
+    try {
+      const res = await submitScan(mode === "message" ? text : mode === "url" ? url.trim() : file!, mode);
+      router.push(`/result/${res.scan_id}`);
+    } catch (e) {
+      setErr((e as Error).message || "The scan failed. Please try again.");
+      setBusy(false);
+    }
   }
 
   const sample = () => {

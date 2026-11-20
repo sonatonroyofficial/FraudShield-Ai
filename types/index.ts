@@ -25,6 +25,10 @@ export interface ScanResult {
   input_preview: string;
   created_at: string;
   demo_note?: Bi;
+  scam_type?: Bi;
+  extracted_text?: string;
+  explanation?: Bi;
+  engine?: { llm: boolean; rules: boolean; threat_intel: boolean };
 }
 
 export interface CommunityReport {

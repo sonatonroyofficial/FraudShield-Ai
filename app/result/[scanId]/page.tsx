@@ -5,7 +5,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Quote, CheckCircle2, Info, Flag, RotateCcw, Link2, Phone, Bookmark, Cpu, ScanText, Fingerprint, Image as ImageIcon } from "lucide-react";
 import { fetchScan } from "@/services/api";
-import { SAMPLE_OCR } from "@/lib/analyze";
 import { useLang } from "@/lib/i18n";
 import RiskBadge, { RISK_STYLE } from "@/components/RiskBadge";
 import type { ScanResult } from "@/types";
@@ -69,9 +68,12 @@ export default function ResultPage() {
                     {res.input_type === "url" ? <Link2 size={13} /> : res.input_type === "image" ? <ImageIcon size={13} /> : <ScanText size={13} />} {typeLabel}
                   </span>
                   <span className="rounded-full bg-paper-2 px-3 py-1.5 text-xs font-medium text-ink-soft">{{ en: "English", bn: "বাংলা", banglish: "Banglish" }[res.language]}</span>
+                  {res.engine && <span className="inline-flex items-center gap-1.5 rounded-full bg-paper-2 px-3 py-1.5 text-xs font-medium text-ink-soft"><Cpu size={13} />{[res.engine.rules && "Rules", res.engine.llm && "AI context", res.engine.threat_intel && "Threat intel"].filter(Boolean).join(" + ")}</span>}
                 </div>
                 <h1 className="mt-4 text-balance font-display text-3xl font-medium leading-tight tracking-tight sm:text-[2.6rem]">{t(`risk.guide.${res.risk_level}` as "risk.guide.high")}</h1>
+                {res.scam_type && <p className="mt-3 text-sm font-semibold uppercase tracking-wider text-muted">{lang === "bn" ? "শনাক্ত ধরন" : "Detected type"}: <span className={s.text}>{bi(res.scam_type)}</span></p>}
                 <p className="mt-3 max-w-xl text-lg leading-relaxed text-ink-soft">{bi(res.summary)}</p>
+                {res.explanation && <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-ink-soft">{bi(res.explanation)}</p>}
                 <div className="mt-5 flex items-center gap-3 text-xs font-medium text-muted" aria-label="Evidence strength">
                   <span>Evidence strength</span>
                   <div className="flex gap-1.5">{[1, 2, 3, 4].map((n) => <motion.span key={n} initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 0.7 + n * 0.12 }} className="h-1.5 w-9 origin-left rounded-full" style={{ background: n <= strength ? s.hex : "#e4ede8" }} />)}</div>
@@ -87,7 +89,7 @@ export default function ResultPage() {
               <motion.section variants={item} className="hairline rounded-[1.8rem] bg-white/70 p-6">
                 <h2 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted"><Quote size={14} /> {res.input_type === "image" ? "Text read from screenshot" : "What you submitted"}</h2>
                 <p className="mt-3 whitespace-pre-wrap break-words text-[15px] leading-8 text-ink">
-                  {res.input_type === "image" ? <Highlighted text={SAMPLE_OCR} terms={terms} level={res.risk_level} /> : <Highlighted text={res.input_preview} terms={terms} level={res.risk_level} />}
+                  {res.input_type === "image" ? <Highlighted text={res.extracted_text ?? ""} terms={terms} level={res.risk_level} /> : <Highlighted text={res.input_preview} terms={terms} level={res.risk_level} />}
                 </p>
                 {(res.extracted.urls.length > 0 || res.extracted.phones.length > 0) && (
                   <div className="mt-4 flex flex-wrap gap-2 border-t border-line pt-4">

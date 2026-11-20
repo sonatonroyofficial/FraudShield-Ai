@@ -42,7 +42,7 @@ export default function About() {
       </section>
 
       <section className="mx-auto mt-24 max-w-5xl px-6">
-        <Reveal><h2 className="flex items-center gap-3 font-display text-3xl font-medium"><Ban className="text-clay" /> What FraudShield does not do</h2></Reveal>
+        <Reveal><h2 className="flex items-center gap-3 font-display text-3xl font-medium"><Ban className="text-clay" /> What ThreatX does not do</h2></Reveal>
         <Reveal delay={0.08}><ul className="mt-6 grid gap-3 sm:grid-cols-2">
           {["Verify live bKash, Nagad or bank transactions", "Automatically block numbers or accounts", "Accuse a person or seller of a crime", "Monitor your private SMS or WhatsApp", "Replace antivirus or device protection", "Move money on your behalf"].map((x) => <li key={x} className="hairline flex items-center gap-3 rounded-2xl bg-white/60 px-5 py-4 text-ink-soft"><span className="h-1.5 w-1.5 rounded-full bg-clay" />{x}</li>)}
         </ul></Reveal>

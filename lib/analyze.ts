@@ -7,7 +7,7 @@ interface Rule { id: string; name: Bi; reason: Bi; weight: number; re: RegExp }
 
 const R = (s: string) => new RegExp(s, "iu");
 
-const MESSAGE_RULES: Rule[] = [
+export const MESSAGE_RULES: Rule[] = [
   { id: "otp", weight: 38,
     name: { en: "Request for OTP / PIN / password", bn: "OTP / PIN / পাসওয়ার্ড চাওয়া" },
     reason: { en: "Legitimate services never ask you to share an OTP, PIN or password in a message.", bn: "বৈধ প্রতিষ্ঠান কখনো মেসেজে OTP, PIN বা পাসওয়ার্ড চায় না।" },
@@ -96,21 +96,21 @@ export function analyzeUrl(raw: string): Indicator[] {
   return out;
 }
 
-function levelFrom(score: number, hasUrls: boolean, len: number): RiskLevel {
+export function levelFrom(score: number, hasUrls: boolean, len: number): RiskLevel {
   if (score >= 60) return "high";
   if (score >= 30) return "suspicious";
   if (score >= 8 || hasUrls || len < 25) return "verify";
   return "none";
 }
 
-const SUMMARY: Record<RiskLevel, Bi> = {
+export const SUMMARY: Record<RiskLevel, Bi> = {
   high: { en: "Several strong scam indicators were found. Treat this as dangerous until you verify it independently.", bn: "একাধিক জোরালো প্রতারণার সংকেত পাওয়া গেছে। স্বাধীনভাবে যাচাই না করা পর্যন্ত এটিকে বিপজ্জনক ধরে নিন।" },
   suspicious: { en: "Multiple concerning indicators were found. Be careful and verify through an official channel.", bn: "একাধিক উদ্বেগজনক সংকেত পাওয়া গেছে। সতর্ক থাকুন এবং অফিসিয়াল মাধ্যমে যাচাই করুন।" },
   verify: { en: "There is not enough evidence for a reliable assessment. Please check through an official source.", bn: "নির্ভরযোগ্য মূল্যায়নের জন্য যথেষ্ট প্রমাণ নেই। অনুগ্রহ করে অফিসিয়াল উৎস থেকে যাচাই করুন।" },
   none: { en: "No known threat indicators were found. This is not a guarantee of safety — keep your normal caution.", bn: "পরিচিত কোনো ঝুঁকির সংকেত পাওয়া যায়নি। এটি নিরাপত্তার নিশ্চয়তা নয় — স্বাভাবিক সতর্কতা বজায় রাখুন।" },
 };
 
-const ACTIONS: Record<RiskLevel, Bi[]> = {
+export const ACTIONS: Record<RiskLevel, Bi[]> = {
   high: [
     { en: "Do not open the link or reply.", bn: "লিংক খুলবেন না, উত্তরও দেবেন না।" },
     { en: "Never share your OTP, PIN or password with anyone.", bn: "OTP, PIN বা পাসওয়ার্ড কারো সাথে শেয়ার করবেন না।" },
@@ -132,15 +132,15 @@ const ACTIONS: Record<RiskLevel, Bi[]> = {
   ],
 };
 
-const LIMITS: Bi[] = [
+export const LIMITS: Bi[] = [
   { en: "The sender or website has not been independently verified.", bn: "প্রেরক বা ওয়েবসাইট স্বাধীনভাবে যাচাই করা হয়নি।" },
   { en: "This is an evidence-based estimate, not proof of fraud or of safety.", bn: "এটি প্রমাণভিত্তিক অনুমান, প্রতারণা বা নিরাপত্তার প্রমাণ নয়।" },
-  { en: "Live threat-intelligence lookups run on the FraudShield backend and are not part of this preview.", bn: "লাইভ থ্রেট-ইন্টেলিজেন্স যাচাই FraudShield ব্যাকএন্ডে চলে, এই প্রিভিউতে নেই।" },
+  { en: "Live threat-intelligence lookups run on the ThreatX backend and are not part of this preview.", bn: "লাইভ থ্রেট-ইন্টেলিজেন্স যাচাই ThreatX ব্যাকএন্ডে চলে, এই প্রিভিউতে নেই।" },
 ];
 
 export const SAMPLE_OCR = "bKash Alert: Your account will be suspended today. Verify immediately at http://bkash-secure-verify.xyz/login and share the OTP you receive to avoid permanent suspension.";
 
-function contextAround(text: string, idx: number, len: number) {
+export function contextAround(text: string, idx: number, len: number) {
   const start = Math.max(0, idx - 24), end = Math.min(text.length, idx + len + 24);
   return (start > 0 ? "…" : "") + text.slice(start, end).replace(/\s+/g, " ").trim() + (end < text.length ? "…" : "");
 }

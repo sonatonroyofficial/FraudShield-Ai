@@ -45,7 +45,7 @@ export default function AdminLogin() {
             {busy ? <><Loader2 size={17} className="animate-spin" /> Signing in…</> : <>Sign in <ArrowRight size={16} className="transition group-hover:translate-x-1" /></>}
           </button>
         </form>
-        <Link href="/" className="mt-6 inline-block text-sm text-muted underline-offset-4 hover:underline">← Back to FraudShield</Link>
+        <Link href="/" className="mt-6 inline-block text-sm text-muted underline-offset-4 hover:underline">← Back to ThreatX</Link>
       </motion.div>
     </div>
   );

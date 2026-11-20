@@ -9,7 +9,7 @@ import { useLang } from "@/lib/i18n";
 
 export default function Footer() {
   const { t } = useLang();
-  if (usePathname().startsWith("/admin")) return null;
+  { const p = usePathname(); if (p.startsWith("/admin") || p.startsWith("/docs")) return null; }
   return (
     <footer className="relative mt-24 overflow-hidden bg-pine text-paper">
       <Image src={IMG.mist(1800)} alt="" fill sizes="100vw" className="object-cover opacity-[0.16] mix-blend-luminosity" />
@@ -18,7 +18,7 @@ export default function Footer() {
           <div>
             <Logo light />
             <p className="mt-4 max-w-xs font-display text-xl leading-snug text-paper/90">{t("foot.tag")}</p>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-paper/60">FraudShield shows its evidence and its limits. “No known threat detected” is never a guarantee of safety.</p>
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-paper/60">ThreatX shows its evidence and its limits. “No known threat detected” is never a guarantee of safety.</p>
           </div>
           {[
             { h: "Product", l: [["Scanner", "/scanner"], ["Community", "/community"], ["My Shield", "/dashboard"]] },
@@ -34,7 +34,7 @@ export default function Footer() {
           ))}
         </div>
         <div className="mt-14 flex flex-col gap-4 border-t border-paper/15 pt-6 text-xs text-paper/55 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} FraudShield AI · Prototype for Bangladesh</p>
+          <p>© {new Date().getFullYear()} ThreatX AI · Prototype for Bangladesh</p>
           <div className="flex gap-5">
             <span className="inline-flex items-center gap-1.5"><Lock size={13} /> Private by default</span>
             <span className="inline-flex items-center gap-1.5"><Eye size={13} /> Evidence shown</span>

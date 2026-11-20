@@ -1,4 +1,4 @@
-# FraudShield AI — Frontend
+# ThreatX AI — Frontend
 
 Next.js 15 (App Router) + TypeScript + Tailwind CSS v4 + Framer Motion + Lucide icons.
 

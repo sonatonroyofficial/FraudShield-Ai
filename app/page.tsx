@@ -130,7 +130,7 @@ function How() {
       <div className="relative mx-auto max-w-6xl px-6">
         <Reveal className="max-w-2xl"><p className="text-sm font-semibold uppercase tracking-[0.2em] text-sage">How it works</p>
           <h2 className="mt-3 text-balance font-display text-4xl font-medium leading-tight tracking-tight sm:text-5xl">Five independent layers. <span className="italic text-sage">One calm answer.</span></h2>
-          <p className="mt-5 text-lg text-paper/70">FraudShield is not a chatbot guessing “scam or not”. It combines separate sources of evidence, so no single weak signal decides the outcome.</p></Reveal>
+          <p className="mt-5 text-lg text-paper/70">ThreatX is not a chatbot guessing “scam or not”. It combines separate sources of evidence, so no single weak signal decides the outcome.</p></Reveal>
         <div className="relative mt-16 grid gap-5 md:grid-cols-5">
           <motion.span aria-hidden initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ duration: 1.8, ease: "easeInOut" }} className="absolute left-[10%] right-[10%] top-7 hidden h-px origin-left bg-gradient-to-r from-sage/0 via-sage/70 to-sage/0 md:block" />
           {steps.map((s, i) => (
@@ -195,7 +195,7 @@ function Languages_() {
     <section className="mx-auto max-w-6xl px-6 pt-32">
       <Reveal className="mx-auto max-w-2xl text-center"><Eyebrow>Made for how people really write</Eyebrow>
         <h2 className="mt-3 text-balance font-display text-4xl font-medium leading-tight tracking-tight sm:text-5xl">বাংলা, English <span className="italic text-pine-2">and Banglish.</span></h2>
-        <p className="mt-5 text-lg text-ink-soft">Banglish is not just English. FraudShield is built to understand mixed scripts and romanised Bangla.</p></Reveal>
+        <p className="mt-5 text-lg text-ink-soft">Banglish is not just English. ThreatX is built to understand mixed scripts and romanised Bangla.</p></Reveal>
       <div className="mt-12 grid gap-5 md:grid-cols-3">
         {ex.map((e, i) => (
           <Reveal key={e.l} delay={i * 0.1}>
@@ -218,7 +218,7 @@ function Promise_() {
           <div className="p-9 sm:p-14">
             <p className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-sage"><Gavel size={15} /> Our promise</p>
             <h2 className="mt-4 text-balance font-display text-3xl font-medium leading-tight sm:text-5xl">“No known threat” is <span className="italic text-sage">never</span> “safe”.</h2>
-            <p className="mt-5 max-w-lg text-lg leading-relaxed text-paper/75">New scams appear before any database knows them. So FraudShield never shows a green “Safe” stamp or an invented “97% scam” number. We show what we found, what we could not verify, and what a careful person would do next.</p>
+            <p className="mt-5 max-w-lg text-lg leading-relaxed text-paper/75">New scams appear before any database knows them. So ThreatX never shows a green “Safe” stamp or an invented “97% scam” number. We show what we found, what we could not verify, and what a careful person would do next.</p>
             <ul className="mt-8 grid gap-3 text-[15px] sm:grid-cols-2">
               {["Uncertainty is stated, not hidden", "Your scans stay private", "Reports are reviewed by people", "A report is an allegation, not proof"].map((x) => <li key={x} className="flex items-center gap-2.5"><ShieldCheck size={17} className="shrink-0 text-sage" />{x}</li>)}
             </ul>
@@ -266,7 +266,7 @@ function Faq() {
   const [open, setOpen] = useState<number | null>(0);
   const qa = [
     ["Is my message shared with anyone?", "No. Scans are private by default. Only reports you deliberately submit enter the community review queue — and they are reviewed by a person first."],
-    ["Can FraudShield confirm a bKash or Nagad transaction?", "No. Verifying a real transaction needs official integration. FraudShield only analyses the text or screenshot you submit and explains suspicious patterns."],
+    ["Can ThreatX confirm a bKash or Nagad transaction?", "No. Verifying a real transaction needs official integration. ThreatX only analyses the text or screenshot you submit and explains suspicious patterns."],
     ["What if the result says “No known threat detected”?", "That means we found no significant known indicators. It is not a guarantee. Newly created scams may not be known yet, so keep your normal caution."],
     ["Do I need an account?", "No. You can scan right away. Accounts will only be needed later for saved history and community features."],
   ];
